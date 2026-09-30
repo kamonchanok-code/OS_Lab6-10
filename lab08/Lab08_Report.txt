@@ -1,0 +1,18 @@
+======================================================
+COE67-222 Operating Systems - Lab 08 Report
+Name: Kamonchanok Ninphat
+Student ID: 67101865
+======================================================
+
+1. Disk Scheduling (Phase 2):
+The SCAN algorithm resulted in lower Total Head Movement because it services disk requests in an ordered direction instead of following the requests exactly in their arrival order. In my experiment, FCFS required 640 cylinders of head movement, while SCAN required only 331 cylinders.
+
+FCFS caused the disk head to move back and forth between distant tracks. In contrast, SCAN behaves like an elevator. The disk head moves in one direction and services all requests along its path, continues to the end of the disk, and then reverses direction to service the remaining requests. This reduces unnecessary movement and improves disk access efficiency.
+
+2. I/O Bound Concept:
+An I/O Bound task is a task whose performance is limited mainly by input/output operations instead of CPU computation. During I/O operations, the CPU often has to wait for slower devices such as disks or storage systems to complete their work. Therefore, the CPU is usually not at 100% utilization and may remain mostly idle or execute other available processes while waiting for I/O operations to finish.
+
+3. AI Industry Connection (Phase 3):
+Storing an AI dataset as 1,000,000 separate .jpg files creates high I/O overhead because the operating system must repeatedly locate, open, read, and close each individual file. It also has to process file metadata, filesystem information, and many separate I/O requests. This can cause the GPU to wait for data instead of performing model computation, resulting in GPU starvation.
+
+Packing the dataset into a sequential binary format such as TFRecord, WebDataset, or HDF5 reduces this overhead. The operating system can open a smaller number of files and read large blocks of data sequentially. In my experiment, reading 1,000 separate files took 0.0231 seconds, while reading the packed dataset took only 0.0010 seconds. This demonstrates that sequential packed-file access can provide data to the AI training process much more efficiently.

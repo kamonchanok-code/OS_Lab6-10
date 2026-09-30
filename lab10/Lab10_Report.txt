@@ -1,0 +1,42 @@
+======================================================
+COE67-222 Operating Systems - Lab 10 Report (Final)
+Name: Kamonchanok Ninphat
+Student ID: 67101865
+======================================================
+
+1. The Role of the Operating System:
+
+- File System & Permissions (Lab 9):
+The script checks whether the requested dataset exists using:
+
+if not os.path.exists(dataset_path):
+
+This simulates the Operating System checking whether a process can access a required file before allowing the job to continue. Workload_D_Hacker requested the file "secret_keys.txt", which did not exist, so the system immediately rejected the job before allocating RAM or GPU resources. This prevents invalid or unauthorized workloads from consuming system resources.
+
+- Memory Management (Labs 5/6):
+The OS simulator uses a while loop together with ram_lock to check whether enough physical RAM is available before allowing a job to run. A job waits until:
+
+self.available_ram_gb >= req_ram
+
+is true. Only then does the system subtract the requested RAM from the available memory. This behavior prevents the simulator from allocating more memory than the system has available. Therefore, it helps prevent excessive paging, swapping, and Thrashing.
+
+- Concurrency & Deadlocks (Labs 3/4):
+The requested GPU numbers are sorted before the locks are acquired:
+
+sorted_gpus = sorted(req_gpus)
+
+The job then acquires GPU locks in the same ascending order. Using a consistent resource acquisition order prevents different jobs from locking GPUs in conflicting orders. This removes the Circular Wait condition and therefore helps prevent deadlocks.
+
+2. Hardware Utilization:
+
+The Operating System simulator successfully ran Workload A, Workload B, and Workload C concurrently because the workloads required different combinations of resources.
+
+Workload_A_LLaMA used 40GB of RAM and GPUs 0, 1, and 2. Workload_B_Preproc used 16GB of RAM but required no GPU, so it could run on the CPU at the same time as Workload A. Workload_C_Infer required only 2GB of RAM and GPU 3, which was still available.
+
+When all three workloads were running, the Live Dashboard showed 6/64 GB of RAM available and three active jobs. GPUs 0, 1, and 2 were being used by Workload A, while GPU 3 was being used by Workload C. Therefore, the workloads did not block each other because they were able to use different available hardware resources.
+
+The scheduler allowed the jobs to run concurrently while controlling RAM and GPU allocation with locks. When each workload finished, its resources were released and became available again. At the end of the experiment, RAM returned to 64/64 GB and all GPUs returned to IDLE.
+
+3. Course Reflection (AI Engineering Context):
+
+Understanding Operating Systems gives an MLOps Engineer an important advantage because AI systems depend on much more than Python or PyTorch code. Knowledge of process queues and scheduling helps manage multiple training and inference workloads efficiently. Understanding RAM, Virtual Memory, paging, and Thrashing helps prevent Out-Of-Memory problems and severe performance degradation. Deadlock avoidance is important when several jobs share GPUs or other limited resources, while file systems and permissions help protect datasets, credentials, and production model weights. These OS concepts make it possible to design AI infrastructure that is more efficient, reliable, secure, and scalable.

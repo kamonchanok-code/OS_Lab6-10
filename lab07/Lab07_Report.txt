@@ -1,0 +1,18 @@
+======================================================
+COE67-222 Operating Systems - Lab 07 Report
+Name: Kamonchanok Ninphat
+Student ID: 67101865
+======================================================
+
+1. The Convoy Effect (Phase 2):
+The Convoy Effect occurs when short processes have to wait behind a long process in a First-Come, First-Served scheduling system. In this experiment, Process P1 required 10 CPU time units, while P2 and P3 required only 2 and 3 units. Because P1 arrived first, it occupied the CPU until it finished. As a result, P2 and P3 had to wait even though their execution times were much shorter. This increased their waiting times and caused the average waiting time of FCFS to be higher than Round Robin.
+
+2. Choosing the Time Quantum:
+If the Time Quantum in Round Robin is extremely large, such as 100, each process will usually finish its entire CPU burst before the quantum expires. In this case, Round Robin starts to behave similarly to FCFS because each process effectively runs to completion before the next process gets the CPU.
+
+If the Time Quantum is extremely small, such as 0.0001, the CPU must switch between processes very frequently. This creates a large amount of Context Switching overhead. The operating system spends more time saving and restoring process states instead of performing useful computation, which can reduce overall system performance.
+
+3. AI Context:
+Iteration-level Round Robin scheduling prevents long AI requests from blocking short requests by giving each request a small amount of processing time in turn. In the experiment, User_A_Essay required 10 tokens while User_B_Math required only 2 tokens. With FCFS, User_B had to wait until User_A completely finished. With Round Robin, the server generated tokens for each request in rotation, allowing User_B to complete much earlier.
+
+This improves perceived latency in interactive AI applications because short requests can receive their first token and finish quickly instead of waiting behind long requests. As a result, Time To First Token (TTFT) is reduced and the AI system feels more responsive to users.

@@ -1,0 +1,14 @@
+======================================================
+COE67-222 Operating Systems - Lab 06 Report
+Name: Kamonchanok Ninphat
+Student ID: 67101865
+======================================================
+
+1. FIFO vs LRU:
+In the page_replacement.py script, LRU performed better than FIFO because LRU considers how recently each page has been accessed. For the given reference string with 3 frames, FIFO produced 9 page faults while LRU produced only 7 page faults. FIFO removes the page that entered memory first without considering whether it may be needed again soon. In contrast, LRU removes the page that has not been used for the longest period of time. When a page is accessed, LRU moves it to the most recently used position. Therefore, it can keep frequently accessed pages in memory and reduce unnecessary page faults.
+
+2. Understanding Thrashing:
+Thrashing is a situation where the operating system spends too much time moving data between RAM and disk instead of executing the actual program. In my experiment, the RAM scenario took 0.4090 seconds, while the thrashing scenario took 1.6374 seconds, which was about 4 times slower. Scenario 2 took significantly more time because it repeatedly performed disk read and write operations. Disk I/O is much slower than accessing data directly from physical RAM, so frequent swapping causes a large performance decrease.
+
+3. AI Engineering Decision:
+Lowering the batch_size reduces the amount of data that an AI model needs to keep in memory at the same time. This lowers the RAM or VRAM usage of the training process. When the working data can fit within the available physical memory, the operating system does not need to frequently move pages between RAM and disk. As a result, page faults and swapping are reduced, which helps prevent Thrashing and allows the system to spend more time performing actual model computation.

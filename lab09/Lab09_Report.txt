@@ -1,0 +1,26 @@
+======================================================
+COE67-222 Operating Systems - Lab 09 Report
+Name: Kamonchanok Ninphat
+Student ID: 67101865
+======================================================
+
+1. Inodes and Metadata:
+If a file is renamed using the Linux mv command within the same filesystem, its Inode Number normally does not change. This is because the filename is stored in a directory entry, while the inode represents the actual file and its metadata. Renaming the file only changes the directory entry that points to the inode, not the inode itself.
+
+However, if the file is moved to a different filesystem, the operating system may need to create a new file and copy the data, which can result in a different Inode Number.
+
+2. POSIX Permissions:
+The correct 3-digit octal permission is 750.
+
+Owner: Read + Write + Execute = 4 + 2 + 1 = 7
+Group: Read + Execute = 4 + 1 = 5
+Others: No permission = 0
+
+Therefore, the Python command would be:
+
+os.chmod(filename, 0o750)
+
+3. The AI Context:
+Operating System file permissions are safer for protecting production model weights because they are enforced directly by the OS kernel. Even if an application contains a programming error or accidentally opens the model file in write mode, the kernel can deny the operation before the file is modified.
+
+Application-level logic and Python try-except blocks depend on the program behaving correctly. A bug, incorrectly written condition, or another program could bypass that logic. OS-level permissions such as 0o444 apply to all applications running under users without write permission, providing a stronger and more centralized protection mechanism for important AI assets such as trained model weights.
